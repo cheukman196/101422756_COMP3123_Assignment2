@@ -21,10 +21,11 @@ async function run() {
   try {
   
     await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected to mongo db")
     await mongoose.connection.db.admin().command({ ping: 1 });
     
     app.get('/', (req, res) => {
-        res.send('Welcome to Assignment 1');
+        res.send('Welcome to Assignment 2: Backend');
     })
 
     app.use('/api/v1/user', userRouter);
