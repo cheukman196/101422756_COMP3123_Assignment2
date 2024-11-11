@@ -3,7 +3,7 @@ const createUserValidationSchema = require("../utils/createUserValidationSchema.
 
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../model/user.js');
 
 
