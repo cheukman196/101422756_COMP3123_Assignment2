@@ -1,0 +1,44 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '5010:5010'
+    depends_on:
+      - mongodb
+    environment:
+      - PORT=5010
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
+    restart: unless-stopped
+    networks:
+      - employee
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27030:27017'
+    volumes:
+      - ./backend/data/local_mongo_data:/data/db
+    restart: unless-stopped
+    networks:
+      - employee
+
+  
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      - '8030:8081'
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - employee
+
+networks:
+  employee: 
+    driver: bridge
+

@@ -2,18 +2,24 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const userRouter = require('./routes/userRoutes.js')
 const employeeRouter = require('./routes/employeeRoutes.js')
 const errorHandler = require('./errorHandler.js')
 const SERVER_PORT = process.env.PORT || 3000;
 
-// configure environment (based on current .env)
-var nodeEnv = process.env.NODE_ENV || "development";
-require('dotenv').config({ path: `.env.${nodeEnv}`});
+// // configure environment (based on current .env)
+// var nodeEnv = process.env.NODE_ENV || "development";
+// require('dotenv').config({ path: `.env.${nodeEnv}`});
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors({
+  origin: 'http://localhost:3010',
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true,
+}));
 
 // const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true }};
 
