@@ -15,3 +15,5 @@ docker-compose.yml
 # Ignore Git-related files
 .git
 .gitignore
+
+./backend/data
