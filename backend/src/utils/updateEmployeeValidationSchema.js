@@ -25,7 +25,7 @@ const updateEmployeeValidationSchema = {
             errorMessage: 'Email should be a string.'
         },
         isEmail: {
-            errorMessage: 'Email not in proper formatt.'
+            errorMessage: 'Email not in proper format.'
         },
         notEmpty: {
             errorMessage: 'Email should not be empty.'

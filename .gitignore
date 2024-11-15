@@ -71,4 +71,4 @@ client/.env
 dump/
 
 # backend bind mount
-./backend/data
+./backend/data/
