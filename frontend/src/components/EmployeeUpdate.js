@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
 
 
 export default function EmployeeUpdate() {
@@ -11,6 +10,7 @@ export default function EmployeeUpdate() {
         email: '',
         position: '',
         salary: '',
+        department: '',
         date_of_joining: '',
         created_at: '',
         updated_at: ''
@@ -20,7 +20,6 @@ export default function EmployeeUpdate() {
     const host = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5010'
     const employeesUrl = `${host}/api/v1/emp/employees`
     const navigate = useNavigate();
-
 
     const getEmployee = async() => {
         try {
@@ -44,10 +43,7 @@ export default function EmployeeUpdate() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         setErrorMsg('');
-        console.log(employee._id)
         try {
-            console.log(`${employeesUrl}/${employeeId}`)
-            console.log(employee)
             const res = await axios.put(`${employeesUrl}/${employeeId}`, {
                 ...employee,
                 date_of_joining: employee.date_of_joining.substring(0,10)
@@ -76,45 +72,60 @@ export default function EmployeeUpdate() {
 
 
     return (
-        <div>
+        <div class="w-75 m-4 p-4">
             <form>
                 <h2>Employee Update</h2>
-                    <label>First Name</label>
-                    <input type="text" id="first_name" name="first_name" 
-                        value={employee.first_name} onChange={handleInput}/>
-
+                <p>Please ensure all changes are accurate and backups are available.</p>
+                    <div class="form-group row">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" 
+                            value={employee.first_name} onChange={handleInput}/>
+                    </div>
+                    <div class="form-group row">
                     <label>Last Name</label>
-                    <input type="text" id="last_name" name="last_name" 
+                    <input type="text" class="form-control" id="last_name" name="last_name" 
                         value={employee.last_name} onChange={handleInput}/>
-
-                    <label>Email</label>
-                    <input type="email" id="email" name="email" 
+                    </div>
+                    <div class="form-group row">  
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="email" name="email" 
                         value={employee.email} onChange={handleInput}/>
-
-                    <label>Position</label>
-                    <input type="text" id="position" name="position" 
-                        value={employee.position} onChange={handleInput}/>
-
-                    <label>Salary</label>
-                    <input type="number" id="salary" name="salary" 
-                        value={employee.salary} onChange={handleInput}/>
-
-                    <label>Date of Joining</label>
-                    <input type="date" id="date_of_joining" name="date_of_joining" 
-                        value={employee.date_of_joining?.substring(0,10)} onChange={handleInput}/>
-                    
-                    <label>Created at: </label>
-                    <input type="text" id="create_at" name="create_at" disabled
-                        value={employee.created_at?.substring(0,10)} onChange={handleInput}/>
-                    
-                    <label>Updated at</label>
-                    <input type="text" id="updated_at" name="updated_at" disabled
-                        value={employee.updated_at?.substring(0,10)} onChange={handleInput}/>
-
-
-                    <input type="submit" value="Update" onClick={handleSubmit}></input>
-                    <button onClick={() => goToEmployeeList()}>Cancel</button>
-                    <div><p>{errorMsg}</p></div>
+                    </div>
+                    <div class="form-group row">
+                        <label>Position</label>
+                        <input type="text" class="form-control" id="position" name="position" 
+                            value={employee.position} onChange={handleInput}/>
+                    </div>
+                    <div class="form-group row">   
+                        <label>Salary</label>
+                        <input type="number" class="form-control" id="salary" name="salary" 
+                            value={employee.salary} onChange={handleInput}/>
+                    </div>
+                    <div class="form-group row">   
+                        <label>Department</label>
+                        <input type="text" class="form-control" id="department" name="department" 
+                            value={employee.department} onChange={handleInput}/>
+                    </div>
+                    <div class="form-group row">
+                        <label>Date of Joining</label>
+                        <input type="date" class="form-control" id="date_of_joining" name="date_of_joining" 
+                            value={employee.date_of_joining?.substring(0,10)} onChange={handleInput}/>
+                    </div>
+                    <div class="form-group row">
+                        <label>Created at: </label>
+                        <input type="text" class="form-control" id="created_at" name="created_at" disabled
+                            value={employee.created_at?.substring(0,10)} onChange={handleInput}/>
+                    </div>
+                    <div class="form-group row">
+                        <label>Updated at</label>
+                        <input type="text" class="form-control" id="updated_at" name="updated_at" disabled
+                            value={employee.updated_at?.substring(0,10)} onChange={handleInput}/>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                            <input type="submit" value="Update" class="btn btn-primary m-1" onClick={handleSubmit}></input>
+                            <button class="btn btn-secondary m-1" onClick={() => goToEmployeeList()}>Cancel</button>
+                    </div>
+                    <div class="text-danger"><p>{errorMsg}</p></div>
             </form>
         </div>
     )
