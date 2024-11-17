@@ -69,6 +69,3 @@ client/.env
 
 # MongoDB
 dump/
-
-# backend bind mount
-./backend/data/

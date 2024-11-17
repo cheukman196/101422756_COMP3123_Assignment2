@@ -22,7 +22,7 @@ const createEmployeeValidationSchema = {
             errorMessage: 'Email should be a string.'
         },
         isEmail: {
-            errorMessage: 'Email not in proper formatt.'
+            errorMessage: 'Email not in proper format.'
         },
         notEmpty: {
             errorMessage: 'Email should not be empty.'
@@ -50,6 +50,9 @@ const createEmployeeValidationSchema = {
         optional: true,
         isDate: {
             errorMessage: 'Date of Joining should be a valid date format.'
+        },
+        notEmpty: {
+            errorMessage: 'Date of Joining should not be empty.'
         }
     },
 

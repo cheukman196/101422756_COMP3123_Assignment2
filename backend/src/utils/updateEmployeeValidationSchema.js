@@ -53,6 +53,9 @@ const updateEmployeeValidationSchema = {
         optional: true,
         isDate: {
             errorMessage: 'Date of Joining should be a valid date format.'
+        },
+        notEmpty: {
+            errorMessage: 'Date of Joining should not be empty.'
         }
     },
 
