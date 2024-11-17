@@ -19,4 +19,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-./data
+# docker bind mount files
+data/

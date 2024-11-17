@@ -9,12 +9,23 @@ const { isValidObjectId } = require('mongoose');
 
 // route: GET /api/v1/emp/employees
 // get all employees
+// route: GET /api/v1/emp/employees?dept=xxx
+// search employees with given department
 router.get('/employees', async (req, res) => {
     try {
-        const employees = await Employee.find({});
-        // on success
-        res.status(201).send(employees);
 
+        // check for department query string
+        const department = req.query.dept;
+        let condition = {};
+
+        // add search condition if department query string exists
+        if(department != null)
+            condition = { "department": new RegExp(department, 'i') }
+        
+        // const employees = await Employee.find(condition);
+        const employees = await Employee.find(condition);
+        res.status(200).send(employees);
+        
     } catch (err) {
 
         res.status(500).send({ 
