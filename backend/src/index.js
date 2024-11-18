@@ -8,10 +8,6 @@ const employeeRouter = require('./routes/employeeRoutes.js')
 const errorHandler = require('./errorHandler.js')
 const SERVER_PORT = process.env.PORT || 3000;
 
-// // configure environment (based on current .env)
-// var nodeEnv = process.env.NODE_ENV || "development";
-// require('dotenv').config({ path: `.env.${nodeEnv}`});
-
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +31,7 @@ async function run() {
     })
 
     app.use('/api/v1/user', userRouter);
-    app.use('/api/v1/emp',employeeRouter);
+    app.use('/api/v1/emp', employeeRouter);
 
     app.use(errorHandler);
 

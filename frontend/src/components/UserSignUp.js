@@ -32,7 +32,7 @@ export default function UserSignUp() {
             const res = await axios.post(userUrl, {
               ...user,
             });
-            navigate(`/user/login`)
+            navigate(`/`)
         } catch (err) {
             console.error(err)
             if(err.response){
@@ -51,7 +51,7 @@ export default function UserSignUp() {
 
     return (
         <div class="w-50 m-4 p-4">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>User Signup</h2>
                     <div class="form-group row">
                         <label>Username</label>
@@ -70,8 +70,8 @@ export default function UserSignUp() {
                     </div>
 
                     <div class="d-flex justify-content-start">
-                            <input type="submit" value="Signup" class="btn btn-primary m-1" onClick={handleSubmit}></input>
-                            <button class="btn btn-secondary m-1" onClick={() => navigate('/user/login')}>Cancel</button>
+                            <input type="submit" value="Signup" class="btn btn-primary m-1"></input>
+                            <button class="btn btn-secondary m-1" onClick={() => navigate('/')}>Cancel</button>
                     </div>
                     <div class="text-danger"><p>{errorMsg}</p></div>
             </form>

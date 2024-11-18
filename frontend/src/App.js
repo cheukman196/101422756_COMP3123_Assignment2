@@ -12,16 +12,15 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<EmployeeList/>}></Route>
-          <Route path='/employee' element={<EmployeeList/>}></Route>
-          <Route path='/employee/details/:employeeId' element={<EmployeeDetails/>}></Route>
-          <Route path='/employee/update/:employeeId' element={<EmployeeUpdate/>}></Route>
-          <Route path='/employee/create' element={<EmployeeCreate/>}></Route>
-          <Route path='/user/login' element={<UserLogin/>}></Route>
-          <Route path='/user/signup' element={<UserSignUp/>}></Route>
-        </Routes>
-      </BrowserRouter>
+          <Routes>
+            <Route path='/' element={<UserLogin/>}></Route>
+            <Route path='/user/signup' element={<UserSignUp/>}></Route>
+            <Route path='/employee' element={ <EmployeeList/>}></Route>
+            <Route path='/employee/details/:employeeId' element={ <EmployeeDetails/>}> </Route>
+            <Route path='/employee/update/:employeeId' element={ <EmployeeUpdate/>}> </Route>
+            <Route path='/employee/create' element={<EmployeeCreate/>}> </Route>
+          </Routes>
+        </BrowserRouter>
       
     </div>
   );

@@ -6,6 +6,10 @@ const express = require('express');
 const router = express.Router();
 const Employee = require('../model/employee.js');
 const { isValidObjectId } = require('mongoose');
+// const checkAuthToken = require('../checkAuthToken.js')
+
+// check user has logged in
+// router.use(checkAuthToken)
 
 // route: GET /api/v1/emp/employees
 // get all employees
