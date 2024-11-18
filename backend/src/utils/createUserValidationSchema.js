@@ -30,7 +30,7 @@ const createUserValidationSchema = {
             errorMessage: 'Email should be a string.'
         },
         isEmail: {
-            errorMessage: 'Email provide not in proper formatt.'
+            errorMessage: 'Email provide not in proper format.'
         },
         notEmpty: {
             errorMessage: 'Email should not be empty.'

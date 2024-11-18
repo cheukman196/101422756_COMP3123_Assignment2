@@ -17,8 +17,8 @@ export default function EmployeeCreate() {
         department: '',
         date_of_joining: date,
     })
+    
     const [errorMsg, setErrorMsg] = useState('')
-    const { employeeId } = useParams()
     const host = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5010'
     const employeesUrl = `${host}/api/v1/emp/employees`
     const navigate = useNavigate();

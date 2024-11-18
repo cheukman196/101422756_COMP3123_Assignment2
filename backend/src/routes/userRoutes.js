@@ -36,21 +36,21 @@ router.post('/signup',
 
         // on success
         res.status(201).json({
-            message: "User created successfully",
+            message: "User created successfully.",
             username: newUser.username,
             user_id: newUser._id
         });
     } catch (err) {
         if('code' in err && err.code == 11000){
             return res.status(500).send({ 
-                message: "Duplicate username or email.", 
+                message: "Username or email already exists.", 
                 status: 'Status 500: internal server error', 
                 error: err 
             });
         }
 
         return res.status(500).send({ 
-            message: "Signup operation failed", 
+            message: "Signup operation failed.", 
             status: 'Status 500: internal server error', 
             error: err 
         });
