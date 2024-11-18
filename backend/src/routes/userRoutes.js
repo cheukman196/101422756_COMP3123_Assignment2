@@ -4,6 +4,7 @@ const createUserValidationSchema = require("../utils/createUserValidationSchema.
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 const User = require('../model/user.js');
 
 
@@ -71,7 +72,7 @@ router.post('/login',
         const expressValidationResult = validationResult(req);
         if(!expressValidationResult.isEmpty()){
             return res.status(400).send({
-                message: "Oops, you've entered some invalid fields",
+                message: "Oops, you've entered some invalid fields.\n",
                 error: expressValidationResult.array()});
         }
 
@@ -87,12 +88,22 @@ router.post('/login',
             return res.status(404).send({status: false, message: "User cannot be found."})
 
         const result = await bcrypt.compare(password, user.password); // check pw
-        if (result)
-            return res.status(200).send({status: true, message: `User '${user.username}' logged in successfully`}); 
-        else 
+        if (!result)
             return res.status(401).send({status: false, message: "Authentication unsuccessful."}); 
- 
         
+        const token = jwt.sign({ 
+            id: user.id, email: user.email}, // payload: no role-based auth for this assignment
+            process.env.JWT_SECRET, // secret: hard-coded in .env / docker compose (not best practice)
+            { expiresIn: '2h' } // expire time
+        );
+
+        return res.status(200).send({
+            status: true, 
+            message: `User '${user.username}' logged in successfully`,
+            token: token,
+            user: user.username
+        }); 
+   
 
     } catch (err) {
         res.status(500).send({ message: '500: internal server error', error: err });
