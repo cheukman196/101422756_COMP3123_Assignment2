@@ -92,23 +92,46 @@ router.post('/login',
             return res.status(401).send({status: false, message: "Authentication unsuccessful."}); 
         
         const token = jwt.sign({ 
-            id: user.id, email: user.email}, // payload: no role-based auth for this assignment
+            id: user.id, username: user.username}, // payload: no role-based auth for this assignment
             process.env.JWT_SECRET, // secret: hard-coded in .env / docker compose (not best practice)
             { expiresIn: '2h' } // expire time
         );
 
-        return res.status(200).send({
-            status: true, 
-            message: `User '${user.username}' logged in successfully`,
-            token: token,
-            user: user.username
-        }); 
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict', path: "/", maxAge: 2*60*60*1000})
+
+        return res.status(200).json({ username: user.username, token: token }); 
    
 
     } catch (err) {
-        res.status(500).send({ message: '500: internal server error', error: err });
+        return res.status(500).send({ message: '500: internal server error', error: err });
     }
 
+})
+
+// route: POST /api/v1/user/logout
+// logout user by deleteing 'token' cookie
+router.post('/logout', (req, res) => {
+    res.clearCookie('token', {httpOnly: true, secure: true})
+    res.status(200).send({ message: "User logged out successfully."})
+
+})
+
+// route: GET /api/v1/user/check-auth
+// api for frontend to check if user is authenticated
+// checks for 'token' cookie, if verified then return true
+router.get('/check-auth', async (req, res) => {
+    const token = req.cookies.token;
+    try{
+        if(token) {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            return res.send({ isAuth: true, username: decoded.username })   
+        }
+        res.send({ isAuth: false, username: '' })
+           
+    } catch (err) {
+        res.send({ isAuth: false, username: '' })
+    }
+    
 })
 
 module.exports = router;

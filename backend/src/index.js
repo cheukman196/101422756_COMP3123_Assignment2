@@ -3,21 +3,38 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/userRoutes.js')
 const employeeRouter = require('./routes/employeeRoutes.js')
+const authMiddleware = require('./routes/authMiddleware.js')
 const errorHandler = require('./errorHandler.js')
 const SERVER_PORT = process.env.PORT || 3000;
 
 const app = express();
-app.use(express.json());
+app.use(express.json()); // json parsing
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser()) // cookie parsing
+// allow CORS
+const allowedOrigins = [
+  'http://localhost:3000', // Localhost for 
+  'http://frontend:3000', // Docker 
+  'http://backend:5000', // Docker 
+];
+
 app.use(cors({
-  origin: 'http://localhost:3010',
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
-// const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true }};
 
 async function run() {
   try {
@@ -31,7 +48,7 @@ async function run() {
     })
 
     app.use('/api/v1/user', userRouter);
-    app.use('/api/v1/emp', employeeRouter);
+    app.use('/api/v1/emp', authMiddleware, employeeRouter); // check auth first
 
     app.use(errorHandler);
 
