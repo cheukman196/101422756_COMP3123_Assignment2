@@ -1,10 +1,15 @@
 import React, {useState, useEffect, Fragment} from 'react'
-import axios from 'axios'
+import axios from '../config/AxiosConfig'
 import { useNavigate } from 'react-router-dom'
+import UserInfo from './UserInfo'
+
+// Component: List to display all existing employees
+// Displays name, department and position
+// Provides buttons to Update employee, see Details, and Delete employee
 
 export default function EmployeeList(){
     const [employees, setEmployees] = useState([])
-    const [refreshList, setRefreshList] = useState(false)
+    const [refreshList, setRefreshList] = useState(false) // flag for emp list to re-render
     const [deptSearchString, setDeptSearchString] = useState('')
     const [searchInput, setSearchInput] = useState('')
     const host = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5010'
@@ -16,9 +21,7 @@ export default function EmployeeList(){
         try {
             // if search string provided, .../api/v1/emp/employees?dept=xxx
             const url = `${employeesUrl}${deptSearchString != ''? `?dept=${deptSearchString}` : ""}`
-            console.log(url)
             const res = await axios.get(url);
-            console.log(res.data)
             setEmployees(res.data)
         } catch (err) {
             console.error(err)
@@ -57,32 +60,36 @@ export default function EmployeeList(){
     }
 
     useEffect(() => {
+        // refresh on refresh flag true, toggle flag to false
         getEmployees();
         setRefreshList(false)
     }, [refreshList]) 
 
 
     return (
-        <div class="container">
+        <div className="container">
+            <UserInfo></UserInfo>
             <h2>Employee List</h2>
-            <button class="btn btn-primary" onClick={() => {navigate(`/employee/create`)}}>Create Employee</button>
+            <button className="btn btn-primary" onClick={() => {navigate(`/employee/create`)}}>Create Employee</button>
             <br></br>
-            <form onSubmit={handleSubmit} class="my-3">
+            <form onSubmit={handleSubmit} className="my-3">
+                <div className='d-flex'>
                     <input type="text" name="dept" id="dept" value={searchInput} onChange={handleInput} 
-                        placeholder='Search by Department' class="form-control w-25"></input>
-                    <button class="btn btn-warning m-1" type="submit">Search</button>
+                        placeholder='Search by Department' className="form-control w-50"></input>
+                    <button className="btn btn-warning m-1" type="submit">Search</button>
                     { deptSearchString == '' ?
                         <></> :
-                        <button class="btn btn-secondary m-1" onClick={() => {
+                        <button className="btn btn-secondary m-1" onClick={() => {
                             setDeptSearchString('')
                             setSearchInput('')
                             setRefreshList(true)
                         }}>Cancel</button>
                     }
+                </div>
             </form>
             <h5>{deptSearchString == ''? '' : `Search by Department: '${deptSearchString}'`}</h5>
 
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                     <th>Name</th>
@@ -98,9 +105,9 @@ export default function EmployeeList(){
                         <td>{emp.department}</td>
                         <td>{emp.position}</td>
                         <td>
-                            <button class="btn btn-primary mx-1" onClick={() => goToEmployeeUpdate(emp._id)}>Update</button>
-                            <button class="btn btn-secondary mx-1" onClick={() => goToEmployeeDetail(emp._id)}>Details</button>
-                            <button class="btn btn-danger mx-1" onClick={() => deleteEmployee(emp._id, emp.first_name, emp.last_name)}>Delete</button>
+                            <button className="btn btn-primary mx-1" onClick={() => goToEmployeeUpdate(emp._id)}>Update</button>
+                            <button className="btn btn-secondary mx-1" onClick={() => goToEmployeeDetail(emp._id)}>Details</button>
+                            <button className="btn btn-danger mx-1" onClick={() => deleteEmployee(emp._id, emp.first_name, emp.last_name)}>Delete</button>
                         </td>
                     </tr>
                     ))}

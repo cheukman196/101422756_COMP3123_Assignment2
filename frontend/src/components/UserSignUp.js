@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
-import axios from 'axios'
+import axios from '../config/AxiosConfig'
 import { useNavigate } from 'react-router-dom'
 
+// Component: user signup form
 
 export default function UserSignUp() {
 
@@ -71,7 +72,7 @@ export default function UserSignUp() {
 
                     <div class="d-flex justify-content-start">
                             <input type="submit" value="Signup" class="btn btn-primary m-1"></input>
-                            <button class="btn btn-secondary m-1" onClick={() => navigate('/')}>Cancel</button>
+                            <button class="btn btn-secondary m-1" onClick={() => navigate('/')}>Login Account</button>
                     </div>
                     <div class="text-danger"><p>{errorMsg}</p></div>
             </form>
