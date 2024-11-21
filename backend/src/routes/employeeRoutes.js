@@ -16,6 +16,7 @@ const { isValidObjectId } = require('mongoose');
 // route: GET /api/v1/emp/employees?dept=xxx
 // search employees with given department
 router.get('/employees', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     try {
 
         // check for department query string
@@ -46,6 +47,7 @@ router.get('/employees', async (req, res) => {
 router.post('/employees', 
     checkSchema(createEmployeeValidationSchema),
     async (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*")
     try {
         // check validation
         const expressValidationResult = validationResult(req);
@@ -94,6 +96,7 @@ router.post('/employees',
 // route: GET /api/v1/emp/employees/{empID}
 // get specific employee by id
 router.get('/employees/:empID', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     try {
         // check id format matches mongodb _id
         const empID = req.params.empID;
@@ -122,6 +125,7 @@ router.get('/employees/:empID', async (req, res) => {
 router.put('/employees/:eid', 
     checkSchema(updateEmployeeValidationSchema),
     async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     try {
         // check if id matches mongodb _id format
         if(!isValidObjectId(req.params.eid))
@@ -183,6 +187,7 @@ router.put('/employees/:eid',
 // route: DELETE /api/v1/emp/employees?eid=xxx
 // delete employee by id
 router.delete('/employees', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     try {
         // check format of id matches mongodb _id
         if(!isValidObjectId(req.query.eid))

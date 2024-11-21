@@ -13,6 +13,7 @@ const User = require('../model/user.js');
 router.post('/signup', 
     checkSchema(createUserValidationSchema),
     async (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*")
     try {
         // check validation
         const expressValidationResult = validationResult(req);
@@ -69,6 +70,7 @@ router.post('/login',
         .isString().withMessage('Password must be a string.'),
     async (req, res) => {
     try {
+        res.header("Access-Control-Allow-Origin", "*")
         const expressValidationResult = validationResult(req);
         if(!expressValidationResult.isEmpty()){
             return res.status(400).send({
@@ -111,6 +113,7 @@ router.post('/login',
 // route: POST /api/v1/user/logout
 // logout user by deleteing 'token' cookie
 router.post('/logout', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     res.clearCookie('token', {httpOnly: true, secure: true})
     res.status(200).send({ message: "User logged out successfully."})
 
@@ -120,6 +123,7 @@ router.post('/logout', (req, res) => {
 // api for frontend to check if user is authenticated
 // checks for 'token' cookie, if verified then return true
 router.get('/check-auth', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     const token = req.cookies.token;
     try{
         if(token) {

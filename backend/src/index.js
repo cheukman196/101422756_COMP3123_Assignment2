@@ -16,7 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()) // cookie parsing
 // allow CORS
 const allowedOrigins = [
-  'http://localhost:3000', // Localhost for 
+  'http://localhost:3000', // Localhost 
+  'http://localhost:5000', // Localhost 
   'http://frontend:3000', // Docker 
   'http://backend:5000', // Docker 
 ];

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const authMiddleware = (req, res, next) => {
     // const token = req.header('x-auth-token') || req.cookies.token
+    res.header("Access-Control-Allow-Origin", "*")
     const token = req.cookies.token
 
     if(!token)
