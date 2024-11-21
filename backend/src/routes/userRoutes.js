@@ -14,6 +14,7 @@ router.post('/signup',
     checkSchema(createUserValidationSchema),
     async (req, res) => {
         res.header("Access-Control-Allow-Origin", "*")
+
     try {
         // check validation
         const expressValidationResult = validationResult(req);

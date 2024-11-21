@@ -17,6 +17,7 @@ const { isValidObjectId } = require('mongoose');
 // search employees with given department
 router.get('/employees', async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*")
+
     try {
 
         // check for department query string
