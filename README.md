@@ -1,1 +1,2 @@
-**Ensure Public Repo Before Submission**
+**Please Run docker-compose.yml**
+* local-docker-compose I used for development & testing purposes
