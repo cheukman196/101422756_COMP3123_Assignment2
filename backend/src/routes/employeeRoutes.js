@@ -6,7 +6,6 @@ const express = require('express');
 const router = express.Router();
 const Employee = require('../model/employee.js');
 const { isValidObjectId } = require('mongoose');
-// const checkAuthToken = require('../checkAuthToken.js')
 
 // check user has logged in
 // router.use(checkAuthToken)
@@ -16,8 +15,7 @@ const { isValidObjectId } = require('mongoose');
 // route: GET /api/v1/emp/employees?dept=xxx
 // search employees with given department
 router.get('/employees', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*")
-
+    
     try {
 
         // check for department query string
@@ -48,8 +46,7 @@ router.get('/employees', async (req, res) => {
 router.post('/employees', 
     checkSchema(createEmployeeValidationSchema),
     async (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*")
-    try {
+            try {
         // check validation
         const expressValidationResult = validationResult(req);
         // if any error, return 400 and error msg
@@ -97,8 +94,7 @@ router.post('/employees',
 // route: GET /api/v1/emp/employees/{empID}
 // get specific employee by id
 router.get('/employees/:empID', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    try {
+        try {
         // check id format matches mongodb _id
         const empID = req.params.empID;
         if(!isValidObjectId(empID))
@@ -126,8 +122,7 @@ router.get('/employees/:empID', async (req, res) => {
 router.put('/employees/:eid', 
     checkSchema(updateEmployeeValidationSchema),
     async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    try {
+        try {
         // check if id matches mongodb _id format
         if(!isValidObjectId(req.params.eid))
             return res.status(400).send({status: false, message: `Employee ID is invalid.`});
@@ -188,8 +183,7 @@ router.put('/employees/:eid',
 // route: DELETE /api/v1/emp/employees?eid=xxx
 // delete employee by id
 router.delete('/employees', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    try {
+        try {
         // check format of id matches mongodb _id
         if(!isValidObjectId(req.query.eid))
             return res.status(400).send({status: false, message: `Employee ID is invalid.`});
